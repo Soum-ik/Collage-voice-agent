@@ -1,0 +1,7 @@
+{
+  "name": "Gemini Voice Agent",
+  "description": "A conversational voice agent that requires a password for access to a knowledge base. It uses the Gemini Live API for real-time voice interaction and transcription.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
