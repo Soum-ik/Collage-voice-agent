@@ -1,9 +1,8 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 // FIX: Removed non-exported 'LiveSession' type.
 import { GoogleGenAI, LiveServerMessage, Modality, Blob } from "@google/genai";
 import { getSystemInstruction, KNOWLEDGE_BASE } from './constants';
-import { AgentStatus, Speaker, TranscriptEntry } from './types';
+import { AgentStatus, Speaker, TranscriptEntry, SearchResult } from './types';
 
 // --- Helper Functions for Audio Processing ---
 function encode(bytes: Uint8Array): string {
@@ -207,6 +206,26 @@ const TranscriptView: React.FC<{ transcript: TranscriptEntry[], isAuthenticated:
           <div className={`max-w-md p-3 rounded-2xl ${entry.speaker === Speaker.User ? 'bg-blue-600 rounded-br-none' : 'bg-gray-700 rounded-bl-none'}`}>
             <p className="text-sm font-medium">{entry.speaker}</p>
             <p className="text-white">{entry.text}</p>
+            {entry.sources && entry.sources.length > 0 && (
+                <div className="mt-2 pt-2 border-t border-gray-600">
+                    <h4 className="text-xs font-semibold text-gray-400 mb-1">Sources:</h4>
+                    <ul className="space-y-1">
+                        {entry.sources.map((source) => (
+                            <li key={source.uri}>
+                                <a 
+                                    href={source.uri} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-xs text-blue-400 hover:underline break-all flex items-start gap-1.5"
+                                >
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 flex-shrink-0 mt-0.5"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l2.5 2.5a.75.75 0 0 1 0 1.06l-2.5 2.5a.75.75 0 0 1-1.06-1.06L9.94 9.5H4.75a.75.75 0 0 1 0-1.5h5.19l-1.72-1.72a.75.75 0 0 1 0-1.06Z" /><path fillRule="evenodd" d="M14 8A6 6 0 1 1 2 8a6 6 0 0 1 12 0ZM4 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clipRule="evenodd" /></svg>
+                                   <span>{source.title || new URL(source.uri).hostname}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
           </div>
         </div>
       ))}
@@ -345,6 +364,7 @@ export default function App() {
           inputAudioTranscription: {},
           outputAudioTranscription: {},
           systemInstruction: getSystemInstruction(password),
+          tools: [{ googleSearch: {} }],
         },
         callbacks: {
           onopen: async () => {
@@ -383,6 +403,33 @@ export default function App() {
             const outputCtx = audioContextsRef.current.output;
             if (!outputCtx) return;
 
+            const groundingMetadata = (message.serverContent as any)?.groundingMetadata;
+            if (groundingMetadata?.groundingChunks) {
+                const newSources: SearchResult[] = groundingMetadata.groundingChunks
+                    .filter((chunk: any) => chunk.web && chunk.web.uri)
+                    .map((chunk: any) => ({
+                        uri: chunk.web.uri,
+                        title: chunk.web.title || chunk.web.uri,
+                    }));
+                
+                if (newSources.length > 0) {
+                    setTranscript(prev => {
+                        const last = prev[prev.length - 1];
+                        if (last && last.speaker === Speaker.Agent) {
+                            const existingSources = last.sources || [];
+                            const combinedSources = [...existingSources];
+                            newSources.forEach(ns => {
+                                if (!combinedSources.some(es => es.uri === ns.uri)) {
+                                    combinedSources.push(ns);
+                                }
+                            });
+                            return [...prev.slice(0, -1), { ...last, sources: combinedSources }];
+                        }
+                        return prev;
+                    });
+                }
+            }
+            
             const isNewOutputTurn = currentOutputTranscriptionRef.current === "" && !!message.serverContent?.outputTranscription;
             if (isNewOutputTurn) {
                 setAgentStatus(AgentStatus.Thinking);
