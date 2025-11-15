@@ -254,8 +254,8 @@ export default function App() {
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [password, setPassword] = useState<string>('');
-  const [passwordInput, setPasswordInput] = useState<string>('');
+  const [password, setPassword] = useState<string>('stack123');
+  const [passwordInput, setPasswordInput] = useState<string>('stack123');
   const [isWaving, setIsWaving] = useState<boolean>(false);
 
 
@@ -270,27 +270,23 @@ export default function App() {
   const currentOutputTranscriptionRef = useRef("");
   
   useEffect(() => {
-    const storedPassword = localStorage.getItem('agent-password');
-    if (storedPassword) {
-      setPassword(storedPassword);
-      setPasswordInput(storedPassword);
-    }
+    setPassword('stack123');
+    setPasswordInput('stack123');
   }, []);
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordInput(e.target.value);
-  };
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPasswordInput(e.target.value);
+  // };
 
-  const handleSavePassword = () => {
-    if (passwordInput.trim()) {
-      const trimmedPassword = passwordInput.trim();
-      setPassword(trimmedPassword);
-      localStorage.setItem('agent-password', trimmedPassword);
-      alert('Password saved!');
-    } else {
-      alert('Password cannot be empty.');
-    }
-  };
+  // const handleSavePassword = () => {
+  //   if (passwordInput.trim()) {
+  //     const trimmedPassword = passwordInput.trim();
+     
+  //     alert('Password saved!');
+  //   } else {
+  //     alert('Password cannot be empty.');
+  //   }
+  // };
 
   const stopSession = useCallback(async () => {
     setAgentStatus(AgentStatus.Idle);
@@ -343,11 +339,7 @@ export default function App() {
   }, []);
 
   const startSession = useCallback(async () => {
-    if (!password) {
-        setError("Please set and save a password before starting the session.");
-        setAgentStatus(AgentStatus.Error);
-        return;
-    }
+     
     setError(null);
     setAgentStatus(AgentStatus.Connecting);
 
@@ -521,7 +513,7 @@ export default function App() {
   }, [stopSession, password]);
 
   const handleButtonClick = () => {
-    if (agentStatus === AgentStatus.Idle || agentStatus === AgentStatus.Error) {
+    if (agentStatus === AgentStatus.Idle || agentStatus === AgentStatus.Error || password !== 'stack123') {
       startSession();
     } else {
       stopSession();
@@ -565,7 +557,8 @@ export default function App() {
 
           <TranscriptView transcript={transcript} isAuthenticated={isAuthenticated} />
 
-          {!isSessionActive && (
+          {/* TODO: Add a configuration section to set the password */}
+          {/* {!isSessionActive && (
             <div className="my-6 p-4 bg-gray-800/50 rounded-lg max-w-md mx-auto backdrop-blur-sm">
                 <h3 className="text-lg font-semibold text-center mb-3 text-indigo-400">Configuration</h3>
                 <label htmlFor="password-input" className="block text-sm font-medium text-gray-300 mb-1">Access Password</label>
@@ -589,17 +582,17 @@ export default function App() {
                     This password must be spoken to access the agent's knowledge base. It's saved in your browser.
                 </p>
             </div>
-           )}
+           )} */}
 
           <div className="mt-6 text-center">
             {error && <p className="text-red-400 mb-4 font-semibold text-base">{error}</p>}
-            
+
             {/* FIX: Included `AgentStatus.Connecting` in this condition to correctly render the button's connecting state and fix the TypeScript error. */}
             {agentStatus === AgentStatus.Idle || agentStatus === AgentStatus.Error || agentStatus === AgentStatus.Connecting ? (
                  <>
                     <button
                         onClick={handleButtonClick}
-                        disabled={agentStatus === AgentStatus.Connecting || !password}
+                        disabled={agentStatus === AgentStatus.Connecting}
                         className={`relative inline-flex items-center justify-center rounded-full w-48 h-48 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white ${buttonColor} ${(agentStatus === AgentStatus.Connecting || !password) ? 'cursor-not-allowed' : ''} ${(!password && agentStatus !== AgentStatus.Connecting) ? 'opacity-50' : ''}`}
                         title={!password ? 'Please set and save a password first.' : ''}
                     >
@@ -609,9 +602,6 @@ export default function App() {
                         <span className="mt-2 text-lg font-semibold">{buttonText}</span>
                     </div>
                     </button>
-                    {(!password && (agentStatus === AgentStatus.Idle || agentStatus === AgentStatus.Error)) && (
-                        <p className="text-yellow-400 mt-4 font-semibold">Please set and save a password to start.</p>
-                    )}
                  </>
             ) : (
                 <button
@@ -623,7 +613,7 @@ export default function App() {
             )}
           </div>
         </div>
-        <KnowledgeBaseCard />
+        {/* <KnowledgeBaseCard /> */}
       </main>
     </div>
   );

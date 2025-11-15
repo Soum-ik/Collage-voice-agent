@@ -4,15 +4,28 @@ College Name: Gemini University of Technology
 Location: Mountain View, CA
 
 Faculty:
-- Dr. Evelyn Reed: Dean of Computer Science. Expert in AI and Machine Learning.
+
+Computer Science & Technology Department:
+- Ruma Akter: Instructor & Department Head, Computer Science & Technology (2nd Shift). Email: ruma01444@gmail.com, Mobile: 01914280888
+- Md Burhan Uddin: Instructor & Department Head, Computer Science & Technology (1st Shift). Email: borhaankhaan@gmail.com, Mobile: 01575010771
+- Md Saidur Rahman: Junior Instructor, Computer Science & Technology (1st Shift). Email: eng.sydur@gmail.com, Mobile: 01746077593
+- Mahbubul Alam: Junior Instructor, Computer Science & Technology (1st Shift). Email: mahbubredwan78@gmail.com, Mobile: 01308547999
+- Mrinal Debnath: Junior Instructor, Computer Science & Technology (2nd Shift). Email: debnathm90@gmail.com, Mobile: 01752423376
+- Sohel Rana: Junior Instructor, Computer Science & Technology (1st Shift). Email: shohelrana025@gmail.com, Mobile: 01742630352
+- Md Rakibul Hasan Sohel: Junior Instructor, Computer Science & Technology (2nd Shift). Email: shoheltaj81@gmail.com, Mobile: 01611551326
+- Mohammad Shariful Islam: Junior Instructor, Computer Science & Technology (2nd Shift). Email: lecturersharif32@gmail.com, Mobile: 01706364266
+- Abdullah Ibne Najim: Instructor, Computer Science & Technology (2nd Shift). Email: cseabdullah@gmail.com, Mobile: 01756182176
+- Shantanu Ray: Junior Instructor, Computer Science & Technology (1st Shift). Email: shantobd68@gmail.com
+
+Other Departments:
 - Professor David Chen: Head of Physics Department. Known for his work on quantum mechanics.
 - Dr. Maria Garcia: Lead of the Arts & Humanities program.
 
 Student Information:
 - To access student information, the user must ask for a specific student by their full name.
-- Student: Alex Johnson, Role: Computer Science Major, Year: 3. Notable project: "Neural Network for Image Recognition".
-- Student: Brenda Lee, Role: Physics Major, Year: 4. Notable project: "Cosmic Ray Detection Array".
-- Student: Carlos Gomez, Role: Arts Major, Year: 2. Notable project: "Interactive Digital Sculpture".
+- Student: Soumik Sarkar Ratul, Role: Computer Science & Technology, Year: 3. Notable project: "Neural Network for Image Recognition".
+- Student: Goutom Chakraborty, Role: Computer Science & Technology, Year: 4. Notable project: "How to make weed better, and ship it to the world with cheap cost".
+- Student: Emran Hossain, Role: Computer Science & Technology, Year: 2. Notable project: "Graphic Designing".
 ---
 `;
 
