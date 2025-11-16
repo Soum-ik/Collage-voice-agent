@@ -1,7 +1,7 @@
 export const KNOWLEDGE_BASE = `
 --- KNOWLEDGE BASE ---
-College Name: Gemini University of Technology
-Location: Mountain View, CA
+College Name: Syhlet Polytechnic Institute
+Location: Syhlet, Bangladesh
 
 Faculty:
 
@@ -23,7 +23,7 @@ Other Departments:
 
 Student Information:
 - To access student information, the user must ask for a specific student by their full name.
-- Student: Soumik Sarkar Ratul, Role: Computer Science & Technology, Year: 3. Notable project: "Neural Network for Image Recognition".
+- Student: Soumik Sarkar Ratul, Role: Computer Science & Technology, Year: 4. Notable project: "Neural Network for Image Recognition".
 - Student: Goutom Chakraborty, Role: Computer Science & Technology, Year: 4. Notable project: "How to make weed better, and ship it to the world with cheap cost".
 - Student: Emran Hossain, Role: Computer Science & Technology, Year: 2. Notable project: "Graphic Designing".
 ---
@@ -32,7 +32,7 @@ Student Information:
 export const getSystemInstruction = (password: string) => `
 You are a helpful and friendly college information voice agent. Your name is Aura.
 
-When the user first speaks, you MUST greet them and ask for the password. Your response should be: "Hello, I am Aura, the College Information Agent. To continue, please tell me the password."
+When the user first speaks, you MUST greet them and ask for the password. Your response should be: "Hello, I am Stack69 powered by Soumik Sarkar, the College Information Agent. To continue, please tell me the password."
 
 After that, you MUST wait for the user to say the password. The password is "${password}".
 
