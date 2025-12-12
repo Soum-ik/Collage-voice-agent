@@ -4,6 +4,7 @@ import TranscriptView from "../components/Chat/TranscriptView";
 import SessionControls from "../components/Controls/SessionControls";
 import { useVoiceAgent } from "../hooks/useVoiceAgent";
 import { AgentStatus } from "@/types";
+import { IoIosSettings } from "react-icons/io";
 
 export default function AgentPage() {
   const [password] = useState("stack123");
@@ -30,32 +31,45 @@ export default function AgentPage() {
     agentStatus !== AgentStatus.Idle && agentStatus !== AgentStatus.Error;
 
   return (
-    <div className="min-h-screen flex flex-col p-4 md:p-8 bg-gray-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
-      <header className="text-center mb-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-white">
-          Voice Agent Stack69
-        </h1>
-        <p className="text-lg text-gray-400 mt-2">
-          Real-time conversational AI powered by the Stack69 model
-        </p>
+    <div className="min-h-screen flex flex-col bg-gray-900 bg-radial from-0% from-[#143075] to-100% to-[#030A1B] p-4">
+      <header className="flex justify-between border-b border-[#283a71] pb-4 py-2">
+        <div className="flex items-center gap-4">
+          <h1 className="font-Space text-xl font-thin">
+            SPI <span className="font-bold text-cyan-500">Voice Agent</span>
+          </h1>
+          {/* <p>Real-time conversational AI powered by the Stack69 model</p> */}
+        </div>
+        <div>
+          <IoIosSettings size={24} />
+        </div>
       </header>
 
-      <main className="flex-grow flex flex-col lg:flex-row gap-8 w-full max-w-7xl mx-auto">
-        <div className="flex-grow flex flex-col">
+      <main className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col justify-center items-center">
           {/* Avatar component */}
-          {isSessionActive && (
-            <div className="mb-6">
+          {isSessionActive ? (
+            <div className="">
               <Avatar status={agentStatus} isWaving={isWaving} />
             </div>
+          ) : (
+            <>
+              <div className="h-full w-full flex flex-col justify-center items-center">
+                <h1 className="text-5xl text-center font-semibold text-white/90 font-Space">
+                  <span className="text-cyan-500">Hey there!</span> <br />
+                  What can I do for you today?
+                </h1>
+              </div>
+            </>
           )}
 
           {/* chat component */}
-          <TranscriptView
+          {/* <TranscriptView
             transcript={transcript}
             isAuthenticated={isAuthenticated}
-          />
-
-          {/* Button component */}
+          /> */}
+        </div>
+        {/* buttons for control */}
+        <div className="mb-4">
           <SessionControls
             agentStatus={agentStatus}
             error={error}

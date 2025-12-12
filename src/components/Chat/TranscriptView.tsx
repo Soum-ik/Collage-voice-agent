@@ -31,7 +31,7 @@ const TranscriptView: React.FC<TranscriptViewProps> = ({
           }`}
         >
           {entry.speaker === Speaker.Agent && (
-            <div className="w-8 h-8 rounded-full bg-indigo-500 flex-shrink-0 mt-1"></div>
+            <div className="w-8 h-8 rounded-full bg-indigo-500 shrink-0 mt-1"></div>
           )}
           <div
             className={`max-w-md p-3 rounded-2xl ${
@@ -42,7 +42,6 @@ const TranscriptView: React.FC<TranscriptViewProps> = ({
           >
             <p className="text-sm font-medium">{entry.speaker}</p>
             <p className="text-white">{entry.text}</p>
-            {/* Sources render logic here (optional if you want to keep sources) */}
           </div>
         </div>
       ))}

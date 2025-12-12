@@ -13,7 +13,8 @@ const Avatar: React.FC<AvatarProps> = ({ status, isWaving }) => {
   const isThinking = status === AgentStatus.Thinking;
 
   return (
-    <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mx-auto cursor-pointer hover:scale-105 transition-transform duration-300">
+    // SIZE UPDATE: Reduced from w-75/125 (300/500px) to w-[240px]/[350px]
+    <div className="relative w-60 h-60 md:w-87.5 md:h-87.5 mx-auto cursor-pointer hover:scale-105 transition-transform duration-300">
       {/* Style for avatar */}
       <style>{`
         @keyframes breathe {

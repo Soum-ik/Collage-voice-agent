@@ -1,6 +1,9 @@
-// src/components/Controls/SessionControls.tsx
 import React from "react";
 import { AgentStatus } from "@/types";
+import { RxCross2 } from "react-icons/rx";
+import { RiMic2AiLine } from "react-icons/ri";
+import { BsSoundwave } from "react-icons/bs";
+import { Bars } from "react-loader-spinner";
 
 interface SessionControlsProps {
   agentStatus: AgentStatus;
@@ -8,24 +11,6 @@ interface SessionControlsProps {
   onToggleSession: () => void;
   error: string | null;
 }
-
-const MicrophoneIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className="h-16 w-16 text-white"
-  >
-    <path d="M12 1.75a.75.75 0 0 1 .75.75v11.5a.75.75 0 0 1-1.5 0V2.5a.75.75 0 0 1 .75-.75Z" />
-    <path d="M15.75 8.25a.75.75 0 0 1 .75.75v5.25a4.5 4.5 0 0 1-9 0V9a.75.75 0 0 1 1.5 0v5.25a3 3 0 0 0 6 0V9a.75.75 0 0 1 .75-.75Z" />
-    <path d="M12 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" />
-    <path
-      fillRule="evenodd"
-      d="M12 21.75a9.75 9.75 0 1 0 0-19.5 9.75 9.75 0 0 0 0 19.5Zm0-1.5a8.25 8.25 0 1 0 0-16.5 8.25 8.25 0 0 0 0 16.5Z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
 
 const SessionControls: React.FC<SessionControlsProps> = ({
   agentStatus,
@@ -37,7 +22,7 @@ const SessionControls: React.FC<SessionControlsProps> = ({
     switch (agentStatus) {
       case AgentStatus.Idle:
         return {
-          text: "Start Session",
+          text: "Speak",
           color: "bg-indigo-600 hover:bg-indigo-500",
           pulse: false,
         };
@@ -45,7 +30,7 @@ const SessionControls: React.FC<SessionControlsProps> = ({
         return { text: "Connecting...", color: "bg-yellow-600", pulse: true };
       case AgentStatus.Error:
         return {
-          text: "Retry Session",
+          text: "Retry",
           color: "bg-red-600 hover:bg-red-500",
           pulse: false,
         };
@@ -61,38 +46,57 @@ const SessionControls: React.FC<SessionControlsProps> = ({
   const { text, color, pulse } = getButtonState();
 
   return (
-    <div className="mt-6 text-center">
-      {error && (
-        <p className="text-red-400 mb-4 font-semibold text-base">{error}</p>
-      )}
+    <>
+      <div className="text-center">
+        {error && (
+          <p className="text-red-400 mb-4 font-semibold text-base">{error}</p>
+        )}
 
-      {agentStatus === AgentStatus.Idle ||
-      agentStatus === AgentStatus.Error ||
-      agentStatus === AgentStatus.Connecting ? (
-        <button
-          onClick={onToggleSession}
-          disabled={agentStatus === AgentStatus.Connecting}
-          className={`relative inline-flex items-center justify-center rounded-full w-48 h-48 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white ${color} ${
-            agentStatus === AgentStatus.Connecting ? "cursor-not-allowed" : ""
-          }`}
-        >
-          {pulse && (
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/50 opacity-75"></span>
-          )}
-          <div className="z-10 flex flex-col items-center">
-            <MicrophoneIcon />
-            <span className="mt-2 text-lg font-semibold">{text}</span>
+        <div className=" flex justify-center items-center">
+          <div className="flex gap-3 mx-auto border-2 rounded-full p-2 border-white/20 bg-gray-800/50 backdrop-blur-sm">
+            {agentStatus === AgentStatus.Idle ||
+            agentStatus === AgentStatus.Error ||
+            agentStatus === AgentStatus.Connecting ? (
+              <>
+                <button
+                  onClick={onToggleSession}
+                  disabled={agentStatus === AgentStatus.Connecting}
+                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-blue-600 transition-all duration-300 flex justify-center items-center gap-2"
+                >
+                  {agentStatus === AgentStatus.Connecting ? (
+                    <Bars
+                      height="18"
+                      width="18"
+                      color="#ffffff"
+                      ariaLabel="bars-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                    />
+                  ) : (
+                    <RiMic2AiLine />
+                  )}
+                  <p className="text-sm">{text}</p>
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={onToggleSession}
+                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-red-600 flex justify-center items-center gap-2"
+                >
+                  <RxCross2 />
+                  <p className="text-sm">End</p>
+                </button>
+                <button className="px-4 py-3 rounded-full text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+                  <BsSoundwave />
+                </button>
+              </>
+            )}
           </div>
-        </button>
-      ) : (
-        <button
-          onClick={onToggleSession}
-          className="px-8 py-4 bg-red-600 hover:bg-red-500 rounded-lg font-semibold transition-colors text-lg"
-        >
-          Stop Session
-        </button>
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

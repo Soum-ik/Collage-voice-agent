@@ -1,4 +1,3 @@
-// src/hooks/useVoiceAgent.ts
 import { useState, useRef, useCallback, useEffect } from "react";
 import { GoogleGenAI, Modality, Blob, LiveServerMessage } from "@google/genai";
 import { AgentStatus, SearchResult, Speaker, TranscriptEntry } from "@/types";
@@ -12,7 +11,6 @@ export function useVoiceAgent() {
   const [error, setError] = useState<string | null>(null);
   const [isWaving, setIsWaving] = useState<boolean>(false);
 
-  // Refs (লজিক একই থাকবে, শুধু কপি করে এখানে আনা হয়েছে)
   const sessionPromiseRef = useRef<any>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioContextsRef = useRef<any>({

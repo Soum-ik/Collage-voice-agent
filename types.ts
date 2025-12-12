@@ -1,6 +1,6 @@
 export enum Speaker {
-  User = 'User',
-  Agent = 'Agent',
+  User = "User",
+  Agent = "Agent",
 }
 
 export interface SearchResult {
@@ -16,10 +16,10 @@ export interface TranscriptEntry {
 }
 
 export enum AgentStatus {
-  Idle = 'Idle',
-  Connecting = 'Connecting',
-  Listening = 'Listening',
-  Thinking = 'Thinking',
-  Speaking = 'Speaking',
-  Error = 'Error',
+  Idle = "Idle",
+  Connecting = "Connecting",
+  Listening = "Listening",
+  Thinking = "Thinking",
+  Speaking = "Speaking",
+  Error = "Error",
 }
