@@ -15,6 +15,14 @@ export interface TranscriptEntry {
   sources?: SearchResult[];
 }
 
+export interface Props {
+  data: {
+    // ✅ Expects the object structure
+    title: string;
+    description: string;
+  };
+}
+
 export enum AgentStatus {
   Idle = "Idle",
   Connecting = "Connecting",

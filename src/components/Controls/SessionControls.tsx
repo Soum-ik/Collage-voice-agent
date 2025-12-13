@@ -61,7 +61,7 @@ const SessionControls: React.FC<SessionControlsProps> = ({
                 <button
                   onClick={onToggleSession}
                   disabled={agentStatus === AgentStatus.Connecting}
-                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-blue-600 transition-all duration-300 flex justify-center items-center gap-2"
+                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-blue-600 transition-all duration-300 flex justify-center items-center gap-2 cursor-pointer"
                 >
                   {agentStatus === AgentStatus.Connecting ? (
                     <Bars
@@ -83,12 +83,12 @@ const SessionControls: React.FC<SessionControlsProps> = ({
               <>
                 <button
                   onClick={onToggleSession}
-                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-red-600 flex justify-center items-center gap-2"
+                  className="px-4 py-3 bg-white/15 rounded-full text-lg hover:bg-red-600 flex justify-center items-center gap-2 cursor-pointer"
                 >
                   <RxCross2 />
                   <p className="text-sm">End</p>
                 </button>
-                <button className="px-4 py-3 rounded-full text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+                <button className="px-4 py-3 rounded-full text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300 cursor-pointer">
                   <BsSoundwave />
                 </button>
               </>

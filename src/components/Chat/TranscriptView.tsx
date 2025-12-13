@@ -21,7 +21,7 @@ const TranscriptView: React.FC<TranscriptViewProps> = ({
   return (
     <div
       ref={scrollRef}
-      className="flex-grow bg-gray-800/50 rounded-lg p-4 space-y-4 overflow-y-auto backdrop-blur-sm h-64 md:h-96"
+      className="flex-1 bg-gray-800/50 rounded-lg p-4 space-y-4 overflow-y-auto backdrop-blur-sm h-64 md:h-96"
     >
       {transcript.map((entry) => (
         <div

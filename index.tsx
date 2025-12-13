@@ -7,6 +7,11 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
+// Check and set default voice style in localStorage
+if (!localStorage.getItem("voiceStyle")) {
+  localStorage.setItem("voiceStyle", "Despina");
+}
+
 ReactDOM.createRoot(rootElement).render(
   // Update: Wrap with BrowserRouter
   <BrowserRouter>

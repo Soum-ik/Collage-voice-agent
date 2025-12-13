@@ -3,6 +3,7 @@ import { GoogleGenAI, Modality, Blob, LiveServerMessage } from "@google/genai";
 import { AgentStatus, SearchResult, Speaker, TranscriptEntry } from "@/types";
 import { getSystemInstruction } from "@/constants";
 import { encode, decode, decodeAudioData } from "../utils/audioUtils";
+import showToast from "./customToast";
 
 export function useVoiceAgent() {
   const [agentStatus, setAgentStatus] = useState<AgentStatus>(AgentStatus.Idle);
@@ -39,7 +40,7 @@ export function useVoiceAgent() {
         const session = await sessionPromiseRef.current;
         session.close();
       } catch (e) {
-        console.error("Error closing session:", e);
+        showToast("Error closing session.", "Please try again.");
       }
       sessionPromiseRef.current = null;
     }
@@ -65,6 +66,10 @@ export function useVoiceAgent() {
       try {
         await audioContextsRef.current.input.close();
       } catch (e) {
+        showToast(
+          "Failed",
+          "Error closing input audio context. Please try again."
+        );
         console.error("Error closing input audio context:", e);
       }
       audioContextsRef.current.input = null;
@@ -109,6 +114,14 @@ export function useVoiceAgent() {
           outputAudioTranscription: {},
           systemInstruction: getSystemInstruction(password),
           tools: [{ googleSearch: {} }],
+          // New: Voice style configuration
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: {
+                voiceName: localStorage.getItem("voiceStyle") || "Despina",
+              },
+            },
+          },
         },
         callbacks: {
           onopen: async () => {
@@ -295,13 +308,19 @@ export function useVoiceAgent() {
           },
           onclose: () => {
             console.log("Session closed.");
+            // showToast("Session ended.", "You can start a new session.");
             stopSession();
           },
           onerror: (e: any) => {
             console.error("Session error:", e);
-            setError(
-              "Session connection failed. Please check your internet connection and ensure your API key is correctly configured and has billing enabled."
+            showToast(
+              "Session connection failed.",
+              "Please check your internet connection and try again."
             );
+            setAgentStatus(AgentStatus.Error);
+            // setError(
+            //   "Session connection failed. Please check your internet connection and ensure your API key is correctly configured and has billing enabled."
+            // );
             stopSession();
           },
         },
@@ -309,10 +328,15 @@ export function useVoiceAgent() {
 
       sessionPromiseRef.current = sessionPromise;
     } catch (e: any) {
-      console.error("Failed to start session:", e);
-      setError(
+      // show sonner toast error
+      showToast(
+        "Failed to start session.",
         e.message || "Failed to start session. Check permissions and API key."
       );
+      // console.error("Failed to start session:", e);
+      // setError(
+      //   e.message || "Failed to start session. Check permissions and API key."
+      // );
       setAgentStatus(AgentStatus.Error);
     }
   }, [stopSession, password]);
