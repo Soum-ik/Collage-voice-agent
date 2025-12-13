@@ -1,16 +1,20 @@
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router";
+import AllRoute from "./src/routes/Routes";
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+// Check and set default voice style in localStorage
+if (!localStorage.getItem("voiceStyle")) {
+  localStorage.setItem("voiceStyle", "Despina");
+}
+
+ReactDOM.createRoot(rootElement).render(
+  // Update: Wrap with BrowserRouter
+  <BrowserRouter>
+    <AllRoute />
+  </BrowserRouter>
 );
