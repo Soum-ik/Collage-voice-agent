@@ -35,6 +35,7 @@ export default function AgentPage() {
     <>
       <div className="flex flex-1">
         <div className="min-h-full w-full flex flex-col bg-gray-900 bg-radial from-0% from-[#143075] to-100% to-[#030A1B] p-4 lg:rounded-t-2xl">
+          {/* header section */}
           <header className="flex justify-between border-b border-[#283a71] pb-4 py-2">
             <div className="flex items-center gap-4">
               <h1 className="font- text-xl font-thin">
@@ -48,11 +49,16 @@ export default function AgentPage() {
           </header>
 
           <main className="flex-1 flex flex-col">
-            <div className="flex-1 flex flex-col justify-center items-center">
+            <div className="flex-1 ">
               {/* Avatar component */}
               {isSessionActive ? (
-                <div className="">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full overflow-y-auto ">
                   <Avatar status={agentStatus} isWaving={isWaving} />
+                  {/* chat component */}
+                  <TranscriptView
+                    transcript={transcript}
+                    isAuthenticated={isAuthenticated}
+                  />
                 </div>
               ) : (
                 <>
@@ -65,11 +71,11 @@ export default function AgentPage() {
                 </>
               )}
 
-              {/* chat component */}
-              {/* <TranscriptView
-            transcript={transcript}
-            isAuthenticated={isAuthenticated}
-          /> */}
+              {/* chat component
+              <TranscriptView
+                transcript={transcript}
+                isAuthenticated={isAuthenticated}
+              /> */}
             </div>
             {/* buttons for control */}
             <div className="pb-4">

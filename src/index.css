@@ -127,4 +127,15 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* for hiding the scrollbar of chat */
+  .chatWrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .chatWrapper::-webkit-scrollbar-thumb {
+    display: none;
+  }
+  .chatWrapper::-webkit-scrollbar-track {
+    display: none;
+  }
 }
